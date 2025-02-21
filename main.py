@@ -1,45 +1,58 @@
 import time
 import tkinter as tk
 from tkinter import ttk
+from PIL import Image, ImageTk
+import customtkinter
 from ttkthemes import ThemedTk
 
-
-class FlashFocus:
+class FlashFocus(customtkinter.CTk):
     def __init__(self):
+        super().__init__()
         self.executando = False
         self.indice_atual = 0
         self.velocidade = 0.3
 
+        customtkinter.set_appearance_mode("system")
+        customtkinter.set_default_color_theme("dark-blue")
+
         self.window = ThemedTk(theme="equilux")
         self.window.title("Flash Focus")
         self.window.state("zoomed")
+        self.window.iconbitmap("assets/icon.ico")  # Certifique-se que o ícone existe
+        self.window.configure(bg="#0f1924")
 
-        self.window.configure(bg="#444444")
 
-        self.label_palavra = tk.Text(self.window, height=2, font=("Helvetica", 24))
-        self.label_palavra.pack(pady=20)
-        self.label_palavra.tag_configure("central", font=("Helvetica", 24, "bold"), foreground="red")
+        # 🔹 Criar a área de exibição da palavra
+        self.label_palavra = tk.Text(self.window, height=1.5, font=("Helvetica", 30))
+        self.label_palavra.pack(pady=75, padx=200)
+        self.label_palavra.tag_configure("central", font=("Helvetica", 36, "bold"), foreground="red")
         self.label_palavra.tag_configure("center", justify='center')
+        self.label_palavra.configure(bg="#0f1924", fg="white")
 
+        # 🔹 Caixa de texto de entrada
         self.caixa_texto = tk.Text(self.window, height=10, width=30)
         self.caixa_texto.insert(tk.END, "Você pode ler mais rápido do que imagina!")
         self.caixa_texto.pack()
 
-        self.slider_velocidade = ttk.Scale(self.window, from_=100, to=900, orient=tk.HORIZONTAL,
-                                           command=self.ajustar_velocidade)
+        # 🔹 Slider de velocidade
+        self.slider_velocidade = customtkinter.CTkSlider(
+            self.window, from_=100, to=900, command=self.ajustar_velocidade
+        )
         self.slider_velocidade.set(700)
         self.slider_velocidade.pack(pady=10)
 
-        self.frame_botoes = ttk.Frame(self.window)
+        # 🔹 Frame para botões
+        self.frame_botoes = customtkinter.CTkFrame(self.window, fg_color="#0f1924")
         self.frame_botoes.pack(pady=10)
 
-        self.botao_iniciar = ttk.Button(self.frame_botoes, text="Iniciar", command=self.iniciar)
+        # 🔹 Botões de controle
+        self.botao_iniciar = customtkinter.CTkButton(self.frame_botoes, text="Iniciar", command=self.iniciar, fg_color="#155b74")
         self.botao_iniciar.grid(row=0, column=0, padx=5)
 
-        self.botao_pausar = ttk.Button(self.frame_botoes, text="Pausar", command=self.pausar)
+        self.botao_pausar = customtkinter.CTkButton(self.frame_botoes, text="Pausar", command=self.pausar, fg_color="#155b74")
         self.botao_pausar.grid(row=0, column=1, padx=5)
 
-        self.botao_continuar = ttk.Button(self.frame_botoes, text="Continuar", command=self.continuar)
+        self.botao_continuar = customtkinter.CTkButton(self.frame_botoes, text="Continuar", command=self.continuar, fg_color="#155b74")
         self.botao_continuar.grid(row=0, column=2, padx=5)
 
         self.window.mainloop()
