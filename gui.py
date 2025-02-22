@@ -1,4 +1,3 @@
-# gui.py
 import time
 import tkinter as tk
 from tkinter import *
@@ -10,54 +9,49 @@ from config import Config
 from text_processor import TextProcessor
 from quiz_generator import QuizGenerator
 
-
 class FlashFocusGUI(customtkinter.CTk):
     def __init__(self):
         super().__init__()
 
-        customtkinter.set_appearance_mode("system")
-        customtkinter.set_default_color_theme("dark-blue")
+        customtkinter.set_appearance_mode("system") # Define o modo de aparência do sistema
+        customtkinter.set_default_color_theme("dark-blue") # Define o tema de cores padrão
 
-        self.title("Flash Focus")
-        try:
-            self.iconbitmap("assets/icon.ico")
-        except:
-            print("Ícone não encontrado, continuando sem ícone.")
+        self.title("Flash Focus") # Define o título da janela
+        self.iconbitmap("assets/icon.ico")
         self.configure(fg_color=Config.BG_COLOR)
 
-        # Carregar e exibir a imagem
-        self.img_logo = Image.open("assets/icon.png")
+
+        self.img_logo = Image.open("assets/icon.png") # Carrega a imagem do logo
         self.img_logo = ImageTk.PhotoImage(self.img_logo)
         self.logo_label = tk.Label(self, image=self.img_logo, bg=Config.BG_COLOR)
         self.logo_label.pack(pady=10)
 
-        # Área de exibição da palavra
-        self.label_palavra = tk.Text(self, height=1.5, font=("Helvetica", 30))
+        self.label_palavra = tk.Text(self, height=1.5, font=("Helvetica", 30)) # Cria um campo de texto para exibir as palavras sendo lidas
         self.label_palavra.pack(pady=40, padx=200)
-        self.label_palavra.tag_configure("central", font=("Helvetica", 36, "bold"), foreground="red")
+        self.label_palavra.tag_configure("central", font=("Helvetica", 34, "bold"), foreground="red")
         self.label_palavra.tag_configure("center", justify='center')
         self.label_palavra.configure(bg=Config.BG_COLOR, fg="white")
 
-        # Caixa de texto de entrada
-        self.caixa_texto = tk.Text(self, height=10, width=30)
+
+        self.caixa_texto = tk.Text(self, height=10, width=30) # Cria um campo de texto para que o usuario insira o texto a ser lido
         self.caixa_texto.insert(tk.END, Config.DEFAULT_TEXT)
         self.caixa_texto.pack()
 
-        # Slider de velocidade
+
         self.slider_velocidade = customtkinter.CTkSlider(
             self, from_=100, to=900, command=self.ajustar_velocidade
-        )
+        ) # Cria um slider para ajustar a velocidade de leitura
         self.slider_velocidade.set(700)
         self.slider_velocidade.pack(pady=10)
 
-        # Frame para botões
-        self.frame_botoes = customtkinter.CTkFrame(self, fg_color=Config.BG_COLOR)
+
+        self.frame_botoes = customtkinter.CTkFrame(self, fg_color=Config.BG_COLOR) # Cria um frame para os botões
         self.frame_botoes.pack(pady=10)
 
-        # Inicializar o TextProcessor
-        self.text_processor = TextProcessor(self.label_palavra, self.caixa_texto)
 
-        # Botões de controle
+        self.text_processor = TextProcessor(self.label_palavra, self.caixa_texto) # Cria uma instância da classe TextProcessor
+
+
         self.botao_iniciar = customtkinter.CTkButton(self.frame_botoes, text="Iniciar",
                                                      command=lambda: self.text_processor.iniciar(self.update),
                                                      fg_color=Config.BUTTON_COLOR)
@@ -73,22 +67,22 @@ class FlashFocusGUI(customtkinter.CTk):
                                                        fg_color=Config.BUTTON_COLOR)
         self.botao_continuar.grid(row=0, column=2, padx=5)
 
-        # Botão para gerar pergunta
-        self.quiz_generator = QuizGenerator()
+
+        self.quiz_generator = QuizGenerator() # Cria uma instância da classe QuizGenerator
         self.botao_pergunta = customtkinter.CTkButton(self.frame_botoes, text="Gerar Pergunta",
                                                       command=self.gerar_pergunta,
                                                       fg_color=Config.BUTTON_COLOR)
         self.botao_pergunta.grid(row=0, column=3, padx=5)
 
-        # Área para exibir pergunta e alternativas
-        self.label_pergunta = customtkinter.CTkLabel(self, text="", font=("Helvetica", 20), text_color="yellow")
-        self.label_pergunta.pack(pady=10)
 
-        self.radio_var = tk.StringVar(value="")
+        self.label_pergunta = customtkinter.CTkLabel(self, text="", font=("Helvetica", 20), text_color="yellow") # Cria um label para exibir a pergunta
+        self.label_pergunta.pack(pady=10) # Exibe o label na janela
+
+        self.radio_var = tk.StringVar(value="") # Variável para armazenar a alternativa escolhida
         self.radio_buttons = []
         for i in range(3):
-            rb = customtkinter.CTkRadioButton(self, text="", variable=self.radio_var, value=str(i), text_color="white")
-            self.radio_buttons.append(rb)  # Criar, mas não exibir ainda
+            rb = customtkinter.CTkRadioButton(self, text="", variable=self.radio_var, value=str(i), text_color="white") # Cria um botão de rádio
+            self.radio_buttons.append(rb)
 
         self.botao_verificar = customtkinter.CTkButton(self, text="Verificar Resposta",
                                                        command=self.verificar_resposta,
@@ -96,31 +90,34 @@ class FlashFocusGUI(customtkinter.CTk):
         self.botao_verificar.pack(pady=10)
         self.botao_verificar.pack_forget()
 
-        # Maximizar a janela
+
+        self.maximizar_janela() # Maximiza a janela
+
+    def maximizar_janela(self): # Metodo para maximizar a janela
         self.update()
-        time.sleep(0.1)
+        time.sleep(0.5)  #
         hwnd = self.winfo_id()
         win32gui.ShowWindow(hwnd, win32con.SW_MAXIMIZE)
 
-    def ajustar_velocidade(self, value):
+    def ajustar_velocidade(self, value): # Metodo para ajustar a velocidade de leitura
         self.text_processor.ajustar_velocidade(value)
 
-    def gerar_pergunta(self):
+    def gerar_pergunta(self): # Metodo para gerar uma pergunta
         texto = self.caixa_texto.get("1.0", tk.END).strip()
         pergunta, alternativas, correta = self.quiz_generator.gerar_pergunta(texto)
 
-        if not pergunta:
+        if not pergunta: # Verifica se a pergunta foi gerada com sucesso
             self.label_pergunta.configure(text="Digite um texto primeiro!")
             return
 
-        self.resposta_correta = correta
+        self.resposta_correta = correta # Armazena a resposta correta
         self.label_pergunta.configure(text=pergunta)
         for i, (rb, alt) in enumerate(zip(self.radio_buttons, alternativas)):
             rb.configure(text=alt)
-            rb.pack(pady=5)  # Exibir apenas agora, quando a pergunta é gerada
+            rb.pack(pady=5)
         self.botao_verificar.pack()
 
-    def verificar_resposta(self):
+    def verificar_resposta(self): # Metodo para verificar a resposta
         escolha = self.radio_var.get()
         if not escolha:
             self.label_pergunta.configure(text="Selecione uma alternativa!")

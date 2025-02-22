@@ -1,12 +1,11 @@
-# quiz_generator.py
 import openai
 from config import Config
 
-class QuizGenerator:
+class QuizGenerator: # Classe para gerar perguntas de múltipla escolha
     def __init__(self):
         self.client = openai.OpenAI(api_key=Config.API_KEY)
 
-    def gerar_pergunta(self, texto):
+    def gerar_pergunta(self, texto): # Metodo para gerar uma pergunta de múltipla escolha
         if not texto:
             return None, None, None
 
@@ -25,7 +24,7 @@ class QuizGenerator:
         response = self.client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt}]
-        )
+        ) # Chama a API para gerar a pergunta
         resposta = response.choices[0].message.content.strip()
 
         linhas = resposta.split("\n")
