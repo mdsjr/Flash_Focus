@@ -1,3 +1,4 @@
+# gui.py
 import time
 import tkinter as tk
 from tkinter import *
@@ -32,7 +33,7 @@ class FlashFocusGUI(customtkinter.CTk):
 
         # Área de exibição da palavra
         self.label_palavra = tk.Text(self, height=1.5, font=("Helvetica", 30))
-        self.label_palavra.pack(pady=25, padx=200)
+        self.label_palavra.pack(pady=40, padx=200)
         self.label_palavra.tag_configure("central", font=("Helvetica", 36, "bold"), foreground="red")
         self.label_palavra.tag_configure("center", justify='center')
         self.label_palavra.configure(bg=Config.BG_COLOR, fg="white")
@@ -80,15 +81,14 @@ class FlashFocusGUI(customtkinter.CTk):
         self.botao_pergunta.grid(row=0, column=3, padx=5)
 
         # Área para exibir pergunta e alternativas
-        self.label_pergunta = customtkinter.CTkLabel(self, text="", font=("Helvetica", 20))
+        self.label_pergunta = customtkinter.CTkLabel(self, text="", font=("Helvetica", 20), text_color="yellow")
         self.label_pergunta.pack(pady=10)
 
         self.radio_var = tk.StringVar(value="")
         self.radio_buttons = []
         for i in range(3):
-            rb = customtkinter.CTkRadioButton(self, text="", variable=self.radio_var, value=str(i))
-            rb.pack(pady=5)
-            self.radio_buttons.append(rb)
+            rb = customtkinter.CTkRadioButton(self, text="", variable=self.radio_var, value=str(i), text_color="white")
+            self.radio_buttons.append(rb)  # Criar, mas não exibir ainda
 
         self.botao_verificar = customtkinter.CTkButton(self, text="Verificar Resposta",
                                                        command=self.verificar_resposta,
@@ -117,7 +117,7 @@ class FlashFocusGUI(customtkinter.CTk):
         self.label_pergunta.configure(text=pergunta)
         for i, (rb, alt) in enumerate(zip(self.radio_buttons, alternativas)):
             rb.configure(text=alt)
-            rb.pack()
+            rb.pack(pady=5)  # Exibir apenas agora, quando a pergunta é gerada
         self.botao_verificar.pack()
 
     def verificar_resposta(self):
