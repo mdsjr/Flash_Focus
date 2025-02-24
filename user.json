@@ -1,0 +1,13 @@
+{
+  "usuarios": [
+    {
+      "username": "joao",
+      "password": "1234",
+      "progresso": {
+        "leituras": [],
+        "perguntas_acertadas": 0,
+        "velocidade_media": 0.0
+      }
+    }
+  ]
+}
