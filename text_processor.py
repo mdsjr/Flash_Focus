@@ -1,4 +1,3 @@
-# text_processor.py
 import time
 import tkinter as tk
 from datetime import datetime

@@ -1,11 +1,11 @@
 import openai
 from config import Config
 
-class QuizGenerator: # Classe para gerar perguntas de múltipla escolha
+class QuizGenerator:
     def __init__(self):
         self.client = openai.OpenAI(api_key=Config.API_KEY)
 
-    def gerar_pergunta(self, texto): # Metodo para gerar uma pergunta de múltipla escolha
+    def gerar_pergunta(self, texto):
         if not texto:
             return None, None, None
 

@@ -1,4 +1,4 @@
-# progress_frame.py
+
 import tkinter as tk
 import customtkinter
 

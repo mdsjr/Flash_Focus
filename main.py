@@ -1,5 +1,5 @@
 from gui import FlashFocusGUI
 
-if __name__ == "__main__": # Inicia a aplicação
+if __name__ == "__main__":
     app = FlashFocusGUI()
     app.mainloop()

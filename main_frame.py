@@ -1,10 +1,11 @@
-# main_frame.py
+
 import tkinter as tk
 from tkinter import *
 from PIL import Image, ImageTk
 import customtkinter
 from text_processor import TextProcessor
 from quiz_generator import QuizGenerator
+from config import Config
 
 class MainFrame(customtkinter.CTkFrame):
     def __init__(self, parent, ajustar_velocidade_callback, gerar_pergunta_callback):
@@ -29,16 +30,16 @@ class MainFrame(customtkinter.CTkFrame):
         self.img_logo = Image.open("assets/icon.png")
         self.img_logo = ImageTk.PhotoImage(self.img_logo)
         self.logo_label = tk.Label(self, image=self.img_logo, bg="#0f1924")
-        self.logo_label.pack(pady=10)
+        self.logo_label.pack(pady=1)
 
         self.label_palavra = tk.Text(self, height=1.5, font=("Helvetica", 30))
-        self.label_palavra.pack(pady=40, padx=200)
-        self.label_palavra.tag_configure("central", font=("Helvetica", 36, "bold"), foreground="red")
+        self.label_palavra.pack(pady=10, padx=200)
+        self.label_palavra.tag_configure("central", font=("Helvetica", 34, "bold"), foreground="red")
         self.label_palavra.tag_configure("center", justify='center')
         self.label_palavra.configure(bg="#0f1924", fg="white")
 
         self.caixa_texto = tk.Text(self, height=10, width=30)
-        self.caixa_texto.insert(tk.END, "Você pode ler mais rápido do que imagina!")
+        self.caixa_texto.insert(tk.END, Config.DEFAULT_TEXT)
         self.caixa_texto.pack()
 
         self.slider_velocidade = customtkinter.CTkSlider(self, from_=100, to=900, command=self.ajustar_velocidade_callback)

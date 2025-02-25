@@ -1,4 +1,4 @@
-# gui.py
+
 import tkinter as tk
 import customtkinter
 import win32gui
@@ -19,19 +19,19 @@ class FlashFocusGUI(customtkinter.CTk):
         self.iconbitmap("assets/icon.ico")
         self.configure(fg_color="#0f1924")
 
-        # Criar todas as telas como frames
+
         self.frames["login"] = LoginFrame(self, self.login, self.cadastrar)
         self.frames["main"] = MainFrame(self, self.ajustar_velocidade, self.gerar_pergunta)
         self.frames["progress"] = ProgressFrame(self)
         self.frames["profile"] = ProfileFrame(self, self.edit_password, self.logout)
 
-        # Mostrar a tela de login inicialmente
+
         self.show_frame("login")
 
-        # Maximizar a janela
+
         self.after(1000, self.maximizar_janela)
 
-    def show_frame(self, frame_name):
+    def show_frame(self, frame_name): #
         for frame in self.frames.values():
             frame.pack_forget()
         self.frames[frame_name].pack(fill="both", expand=True)

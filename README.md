@@ -21,15 +21,23 @@ O **FlashFocus** é um aplicativo desenvolvido para aprimorar a velocidade de le
 ## Estrutura do Projeto
 
 <pre>
+
 /FlashFocus
 ├── main.py                # Ponto de entrada do aplicativo
-├── gui.py                 # Interface gráfica e lógica de exibição
+├── gui.py                 # Coordena a troca de telas e inicialização
+├── login_frame.py         # Tela de login/cadastro com logo
+├── main_frame.py          # Tela principal (leitura e perguntas)
+├── progress_frame.py      # Tela de progresso
+├── profile_frame.py       # Tela de perfil
 ├── text_processor.py      # Processamento e exibição sequencial de texto
 ├── quiz_generator.py      # Geração de perguntas via API da OpenAI
-├── config.py              # Configurações e chaves (ex.: API_KEY)
+├── config.py              # Configurações e chaves (ex.: API_KEY, DEFAULT_TEXT)
+├── users.json             # Dados dos usuários e progresso
 └── assets/                # Recursos visuais
     ├── icon.ico           # Ícone da janela
     └── icon.png           # Logotipo exibido na interface
+
+
 </pre>
     
 ## Pré-requisitos

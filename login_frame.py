@@ -1,15 +1,21 @@
-# login_frame.py
+
 import tkinter as tk
 import customtkinter
+from PIL import Image, ImageTk
 
 class LoginFrame(customtkinter.CTkFrame):
-    def __init__(self, parent, login_callback, cadastrar_callback):
+    def __init__(self, parent, login_callback, cadastrar_callback): #
         super().__init__(parent, fg_color="#0f1924")
         self.login_callback = login_callback
         self.cadastrar_callback = cadastrar_callback
 
+        self.img_logo = Image.open("assets/icon.png")
+        self.img_logo = ImageTk.PhotoImage(self.img_logo)
+        self.logo_label = tk.Label(self, image=self.img_logo, bg="#0f1924")
+        self.logo_label.pack(pady=(100, 1))
+
         self.label_login = customtkinter.CTkLabel(self, text="Login", font=("Helvetica", 20))
-        self.label_login.pack(pady=20)
+        self.label_login.pack(pady=10)
 
         self.entry_username = customtkinter.CTkEntry(self, placeholder_text="Usuário")
         self.entry_username.pack(pady=10)
